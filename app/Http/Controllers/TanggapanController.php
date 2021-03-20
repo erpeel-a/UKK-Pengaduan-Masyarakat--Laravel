@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\{Tanggapan,Pengaduan};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 class TanggapanController extends Controller
 {
     /**
@@ -13,8 +14,9 @@ class TanggapanController extends Controller
      */
     public function index($id)
     {
+        $dec = Crypt::Decrypt($id);
         return view('pengaduan.create_tanggapan', [
-           'pengaduan' => Pengaduan::with('tanggapan')->where('id', $id)->first(),
+           'pengaduan' => Pengaduan::with('tanggapan')->where('id', $dec)->first(),
         ]);
     }
 
@@ -26,13 +28,15 @@ class TanggapanController extends Controller
      */
     public function store(Request $request, $pengaduan_id)
     {
+        $request->validate(['tanggapan' => 'required']);
+        $dec = Crypt::Decrypt($pengaduan_id);
         Tanggapan::create([
-            'id_pengaduan' => $pengaduan_id,
+            'id_pengaduan' => $dec,
             'tanggal_pengaduan' => now(),
             'tanggapan' => $request->tanggapan,
             'id_petugas' => \Auth::guard('petugas')->user()->id
         ]);
-        $pengaduan = Pengaduan::findOrfail($pengaduan_id);
+        $pengaduan = Pengaduan::findOrfail($dec);
         $pengaduan->status = 'proses';
         $pengaduan->save();
 
@@ -52,7 +56,8 @@ class TanggapanController extends Controller
         $request->validate([
             'status' => 'required|in:selesai',
         ]);
-        $pengaduan = Pengaduan::findOrfail($pengaduan_id);
+        $dec = Crypt::Decrypt($pengaduan_id);
+        $pengaduan = Pengaduan::findOrfail($dec);
         $pengaduan->status = $request->status;
         $pengaduan->save();
 

@@ -5,8 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Pengaduan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
 class PengaduanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:masyarakat')->only(['create']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -65,8 +70,8 @@ class PengaduanController extends Controller
      */
     public function show($id)
     {
-       
-        return view('pengaduan.detail', ['pengaduan' => Pengaduan::with('tanggapan')->where('id', $id)->first()]);
+       $dec = Crypt::Decrypt($id);
+        return view('pengaduan.detail', ['pengaduan' => Pengaduan::with('tanggapan')->where('id', $dec)->first()]);
     }
 
     /**

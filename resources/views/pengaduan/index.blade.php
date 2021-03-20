@@ -44,7 +44,7 @@
                                     @auth('petugas')
                                     <td>
                                         @if ($item->status == 'proses')
-                                        <a href="{{route('pengaduan.setStatus', $item->id)}}?status=selesai"
+                                        <a href="{{route('pengaduan.setStatus', \Crypt::Encrypt($item->id))}}?status=selesai"
                                             class="btn btn-warning"
                                             onclick="return confirm('Apakah anda yakin untuk mengubah status pengaduan ini?')">Ubah
                                             Status ke <strong>Sukses</strong></a>
@@ -57,10 +57,10 @@
                                     </td>
                                     @endauth
                                     <td>
-                                        <a href="{{route('pengaduan.show', $item->id)}}"
+                                        <a href="{{route('pengaduan.show', \Crypt::Encrypt($item->id))}}"
                                             class="btn btn-sm btn-primary mx-2 my-2">Detail</a>
                                         @auth('petugas')
-                                        <a href="{{url('tanggapan/' . $item->id)}}"
+                                        <a href="{{url('tanggapan/' . \Crypt::Encrypt($item->id))}}"
                                           class="btn btn-info btn-sm mx-2 my-2">Tanggapi</a>
                                         @endauth
                                     </td>

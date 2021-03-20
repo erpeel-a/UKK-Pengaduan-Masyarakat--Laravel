@@ -33,11 +33,17 @@
           </li>
           @endauth
           @auth('petugas')
+            @if (auth()->guard('petugas')->user()->level === 'admin')
+            <li class="nav-item">
+              <a class="nav-link" href="{{url('petugas')}}">Master Data Petugas</a>
+            </li>
+            @endif
+          @endauth
+          @auth('petugas')
           <li class="nav-item">
             <a class="nav-link" href="{{url('pengaduan')}}">Data Pengaduan</a>
           </li>
           @endauth
-          
           @auth('masyarakat')
             <li class="nav-item">
               <a class="nav-link" href="{{url('pengaduan/create')}}">Buat Pengaduan</a>

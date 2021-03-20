@@ -12,7 +12,8 @@ class Petugas extends Authenticatable
 {
     use HasFactory,Notifiable,SoftDeletes;
     protected $table = 'petugas';
-
+    protected $guard = 'petugas';
+    protected $guarded = [];
     public function petugas()
     {
         return $this->hasMany(Petugas::class, 'id_petugas', 'id');

@@ -4,9 +4,25 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
-
+use  Auth;
+use Illuminate\Auth\AuthenticationException;
 class Handler extends ExceptionHandler
 {
+
+public function unauthenticated($request,AuthenticationException $excp)
+    {
+        if (! $request->expectsJson()) {
+            return redirect()->back();
+        }
+
+        if($request->is('petugas') || $request->is('petugas/*')){
+            return redirect('petugas/login');
+        }
+        if($request->is('masyarakat') || $request->is('masyarakat/*')){
+            return redirect('masyarakat/login');
+        }
+        return redirect('/');
+    }
     /**
      * A list of the exception types that are not reported.
      *

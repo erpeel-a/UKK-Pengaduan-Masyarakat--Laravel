@@ -56,7 +56,10 @@
               @endif
             <form action="{{url('tanggapan/'. $pengaduan->id)}}" method="post">
               @csrf
-              <textarea name="tanggapan" class="form-control" id="" @if ($pengaduan->status == 'selesai') disabled @endif required cols="30" rows="10">@if($pengaduan->tanggapan){{$pengaduan->tanggapan->tanggapan}}@endif</textarea>
+              <textarea name="tanggapan" class="form-control @error('tanggapan') is-invalid @enderror" id="" @if ($pengaduan->status == 'selesai') disabled @endif required cols="30" rows="10">@if($pengaduan->tanggapan){{$pengaduan->tanggapan->tanggapan}}@endif</textarea>
+              @error('tanggapan')
+              <div class="invalid-feedback">{{$message}}</div>
+            @enderror
               <button class="btn btn-primary my-2" @if($pengaduan->tanggapan) disabled @endif>Kirim Tanggapan</button>
               <a href="{{route('pengaduan.index')}}" class="btn btn-danger">Kembali</a>
             </form>

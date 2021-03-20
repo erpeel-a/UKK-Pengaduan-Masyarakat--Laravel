@@ -13,6 +13,8 @@ class Masyarakat extends Authenticatable
 {
     use HasFactory, Notifiable,SoftDeletes;
     protected $table = 'masyarakat';
+    protected $guard = 'masyarakat';
+    protected $guarded = [];
 
     public function pengaduan()
     {
