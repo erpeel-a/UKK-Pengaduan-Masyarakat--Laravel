@@ -16,7 +16,7 @@ class CreateTanggapanTable extends Migration
         Schema::create('tanggapan', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_pengaduan')->constrained('pengaduan');
-            $table->date('tanggal_pengaduan');
+            $table->date('tanggal_tanggapan');
             $table->text('tanggapan');
             $table->foreignId('id_petugas')->constrained('petugas');
             $table->softDeletes();
