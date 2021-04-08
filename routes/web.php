@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{PagesController,AuthController,PengaduanController, TanggapanController, UserController};
+use App\Http\Controllers\{PagesController,AuthController,PengaduanController, TanggapanController, UserController, ReportController};
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,10 +29,12 @@ Route::resource('petugas', UserController::class)->middleware('rolePetugasCheck'
 Route::group(['middleware' => 'auth:petugas'], function(){
   Route::get('/home/petugas', [PagesController::class, 'dashboard_petugas']);
   Route::get('tanggapan/{pengaduan_id}', [TanggapanController::class, 'index']);
-  Route::post('tanggapan/{pengaduan_id}', [TanggapanController::class, 'store']);
-  Route::get('tanggapan/{pengaduan_id}/set_status', [TanggapanController::class, 'SetStatus'])->name('pengaduan.setStatus');
+  Route::post('tanggapan/{id_pengaduan}', [TanggapanController::class, 'store']);
 });
 Route::resource('pengaduan', PengaduanController::class)->only(['index', 'create', 'store', 'show']);
+Route::get('pengaduan/detail/{id}', [PengaduanController::class, 'detail'])->name('pengaduan.detail');
+Route::get('report', [ReportController::class, 'index']);
+Route::get('generate_report', [ReportController::class, 'generate_report']);
 Route::group(['middleware' => 'auth:masyarakat'], function(){
   Route::get('/home/masyarakat', [PagesController::class, 'dashboard_masyarakat']);
 });

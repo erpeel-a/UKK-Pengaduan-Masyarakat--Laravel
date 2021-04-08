@@ -26,22 +26,18 @@ class TanggapanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $pengaduan_id)
+    public function store(Request $request, $id)
     {
         $request->validate(['tanggapan' => 'required']);
-        $dec = Crypt::Decrypt($pengaduan_id);
         Tanggapan::create([
-            'id_pengaduan' => $dec,
-            'tanggal_pengaduan' => now(),
+            'id_pengaduan' => $id,
+            'tanggal_tanggapan' => now(),
             'tanggapan' => $request->tanggapan,
             'id_petugas' => \Auth::guard('petugas')->user()->id
         ]);
-        $pengaduan = Pengaduan::findOrfail($dec);
-        $pengaduan->status = 'proses';
-        $pengaduan->save();
-
-        return redirect()->back()->with('status', 'Tanggapan Berhasil dikirim');
-        // return $reque
+        $pengaduan = Pengaduan::where(['id' => $id])->update(['status' => 'selesai']);
+        // dd($pengaduan);
+        return redirect()->route('pengaduan.index')->with('status', 'Tanggapan Berhasil dikirim');
     }
 
 

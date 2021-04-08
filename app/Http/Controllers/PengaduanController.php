@@ -71,18 +71,15 @@ class PengaduanController extends Controller
     public function show($id)
     {
        $dec = Crypt::Decrypt($id);
-        return view('pengaduan.detail', ['pengaduan' => Pengaduan::with('tanggapan')->where('id', $dec)->first()]);
+    //    update status pengduan
+        Pengaduan::where('id',$dec)->update(['status' => 'proses']);
+        return view('pengaduan.create_tanggapan', ['pengaduan' => Pengaduan::with('tanggapan')->where('id', $dec)->first()]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pengaduan  $pengaduan
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pengaduan $pengaduan)
+    public function detail($id)
     {
-        //
+        $dec = Crypt::Decrypt($id);
+        return view('pengaduan.detail', ['pengaduan' => Pengaduan::with('tanggapan')->where('id', $dec)->first()]);
     }
 
     /**

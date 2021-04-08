@@ -26,7 +26,6 @@
             <a class="nav-link" href="{{url('home/petugas')}}">Beranda</a>
           </li>
           @endauth
-         
           @auth('masyarakat')
           <li class="nav-item">
             <a class="nav-link" href="{{url('pengaduan')}}">Data Pengaduan</a>
@@ -39,6 +38,13 @@
             </li>
             @endif
           @endauth
+          @auth('petugas')
+          @if (auth()->guard('petugas')->user()->level === 'admin')
+          <li class="nav-item">
+            <a class="nav-link" href="{{url('report')}}">Report</a>
+          </li>
+          @endif
+        @endauth
           @auth('petugas')
           <li class="nav-item">
             <a class="nav-link" href="{{url('pengaduan')}}">Data Pengaduan</a>

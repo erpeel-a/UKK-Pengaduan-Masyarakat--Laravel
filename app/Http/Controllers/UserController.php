@@ -13,8 +13,9 @@ class UserController extends Controller
      */
     public function index()
     {
+        // return Petugas::all();
         return view('petugas.index',[
-            'petugas' => Petugas::orderby('created_at', 'asc')->get(),
+            'petugas' => Petugas::all()
         ]);
     }
 

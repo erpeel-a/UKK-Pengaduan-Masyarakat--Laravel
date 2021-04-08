@@ -7,9 +7,10 @@
         <div class="col-md-12">
             <div class="card shadow">
                 <div class="card-header text-center">
-                    <strong>Daftar Pengaduan Yang Masuk</strong>
+                    <strong>Cetak Laporan</strong>
                 </div>
                 <div class="card-body">
+                  <a href="{{url('generate_report')}}" class="btn btn-primary my-2">Cetak</a>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -18,39 +19,36 @@
                                     <th>Judul Pengaduan</th>
                                     <th>Nama Pelapor</th>
                                     <th>Tanggal Pengaduan</th>
+                                    <th>Foto</th>
+                                    <th>Nama Petugas</th>
+                                    <th>Tanggal Pengaduan</th>
+                                    <th>isi Tanggapan</th>
                                     <th>Status</th>
-                                    <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($pengaduan as $item)
+                                @forelse ($tanggapan as $item)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$item->judul_pengaduan}}</td>
-                                    <td>{{$item->masyarakat->nama}}</td>
-                                    <td>{{$item->tanggal_pengaduan}}</td>
+                                    <td>{{$item->pengaduan->judul_pengaduan}}</td>
+                                    <td>{{$item->pengaduan->masyarakat->nama}}</td>
+                                    <td>{{$item->pengaduan->tanggal_pengaduan}}</td>
+                                    <td><img src="{{asset($item->pengaduan->foto)}}" width="200px" alt=""></td>
+                                    <td>{{$item->petugas->nama_petugas}}</td>
+                                    <td>{{$item->tanggal_tanggapan}}</td>
+                                    <td>{{$item->tanggapan}}</td>
                                     <td>
-                                        @if ($item->status === '0')
+                                        @if ($item->pengaduan->status === '0')
                                         <div class="badge badge-danger">Belum Terverifikasi</div>
                                     </td>
-                                    @elseif($item->status == 'proses')
+                                    @elseif($item->pengaduan->status == 'proses')
                                     <div class="badge badge-warning text-white">Sedang Di Proses</div>
                                     </td>
                                     @else
                                     <div class="badge badge-success">Selesai</div>
                                     @endif
                                     </td>
-                                    <td>
-                                        @if ($item->status === '0' || $item->status == 'proses')
-                                        <a href="{{route('pengaduan.show', \Crypt::Encrypt($item->id))}}"
-                                            class="btn btn-sm btn-success mx-2 my-2">Beri Tanggapan</a>
-                                        @endif
-                                        <a href="{{route('pengaduan.detail', \Crypt::Encrypt($item->id))}}"
-                                            class="btn btn-sm btn-primary mx-2 my-2">Detail</a>
-                                        
-                                    </td>
                                 </tr>
-                                {{ $pengaduan->links() }}
                                 @empty
                                 <tr>
                                     <td class="text-center" colspan="6">Data Pengaduan Tidak tersedia</td>

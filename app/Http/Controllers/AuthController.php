@@ -22,7 +22,7 @@ class AuthController extends Controller
         if(Auth::guard('masyarakat')->attempt(['username' => $request->username,'password' => $request->password])){
             return redirect('/home/masyarakat');
         }else{
-            return redirect()->back()->wihh('danger', 'Username atau Password anda Salah');
+            return redirect()->back()->with('danger', 'Username atau Password anda Salah');
         }
     } 
 
@@ -41,7 +41,7 @@ class AuthController extends Controller
         if(Auth::guard('petugas')->attempt(['username' => $request->username,'password' => $request->password])){
             return redirect('/home/petugas');
         }else{
-            return redirect()->back()->wihh('danger', 'Username atau Password anda Salah');
+            return redirect()->back()->with('danger', 'Username atau Password anda Salah');
         }
     } 
 

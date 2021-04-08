@@ -14,7 +14,7 @@ class PetugasSeeder extends Seeder
     public function run()
     {
         // \DB::table('petugas')->insert([
-        //     'username' => 'petugas1',
+        //     'username' => '  ',
         //     'nama_petugas' => 'petugas1',
         //     'password' => bcrypt('petugas1'),
         //     'no_telp' => 1234567892987,
