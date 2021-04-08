@@ -63,7 +63,7 @@ class PengaduanController extends Controller
     }
 
     /**
-     * Display the specified resource.  
+     * memberi tanggapan.  
      *
      * @param  \App\Models\Pengaduan  $pengaduan
      * @return \Illuminate\Http\Response
@@ -75,7 +75,12 @@ class PengaduanController extends Controller
         Pengaduan::where('id',$dec)->update(['status' => 'proses']);
         return view('pengaduan.create_tanggapan', ['pengaduan' => Pengaduan::with('tanggapan')->where('id', $dec)->first()]);
     }
-
+ /**
+     * detail pengaduan.  
+     *
+     * @param  \App\Models\Pengaduan  $pengaduan
+     * @return \Illuminate\Http\Response
+     */
     public function detail($id)
     {
         $dec = Crypt::Decrypt($id);
